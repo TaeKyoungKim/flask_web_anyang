@@ -166,3 +166,63 @@ index.html 문서를 다음과 같이 수정한다.(jinja2 엔진을 활용한 �
 
 
 
+Atricles() 에서 articles 의 데이터 모양이 리스트이고 각 구성요서가 딕셔너리로 되어 있다.
+
+index.html 에서 테이블로 랜더링 되도록 한다.
+
+
+
+| id   | title | description | author | data |
+| ---- | ----- | ----------- | ------ | ---- |
+|      |       |             |        |      |
+|      |       |             |        |      |
+
+index.html 파일에 다음과 같이 코드를 추가한다.
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index 페이지</title>
+</head>
+<body>
+    <table style="width:100%">
+        
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>author</th>
+            <th>date</th>
+          </tr>
+          {% for article in articles %}
+
+          <tr>
+            <td>{{article['id']}}</td>
+            <td>{{article['title']}}</td>
+            <td>{{article['body']}}</td>
+            <td>{{article['author']}}</td>
+            <td>{{article['create_date']}}</td>
+          </tr>
+        {% endfor %}
+
+      </table>
+</body>
+</html>
+```
+
+
+
+다음과 같은 화면이 랜더링 된다.
+
+![image-20210726164939821](https://user-images.githubusercontent.com/25717861/126952715-d262f9f7-2fcc-485f-8dd0-12c6f21dcbcb.png)
+
+위와 같은 표를 수정해서 description 보이지 않고  title 클릭시 상세페이지가 보여지는 기능 추가
+
+
+
