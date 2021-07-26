@@ -157,10 +157,12 @@ index.html 문서를 다음과 같이 수정한다.(jinja2 엔진을 활용한 �
     <title>index 페이지</title>
 </head>
 <body>
-    <h1>{{ data }}</h1>
+    <h1>{{ articles }}</h1>
 </body>
 </html>
 ```
+
+
 
 
 

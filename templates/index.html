@@ -7,6 +7,26 @@
     <title>index 페이지</title>
 </head>
 <body>
-    <h1>{{ articles }}</h1>
+    <table style="width:100%">
+        
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>author</th>
+            <th>date</th>
+          </tr>
+          {% for article in articles %}
+
+          <tr>
+            <td>{{article['id']}}</td>
+            <td>{{article['title']}}</td>
+            <td>{{article['body']}}</td>
+            <td>{{article['author']}}</td>
+            <td>{{article['create_date']}}</td>
+          </tr>
+        {% endfor %}
+
+      </table>
 </body>
 </html>
