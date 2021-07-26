@@ -226,3 +226,47 @@ index.html 파일에 다음과 같이 코드를 추가한다.
 
 
 
+title 클릭시 http://localhost:5000/id/article 주소로 GET방식으로 요청이 되고 서버는 요청을 받아서 그 아이디에 해당하는 데이터를 RESPONSE 한다.
+
+웹브라우저가가 받아서 웹에 상세 내용을 랜더링한다.
+
+
+
+index.html을 다음과 같이 수정한다.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Page</title>
+</head>
+<body>
+    <header>제목 : {{ article['title'] }}</header>
+    <h3>작가 : {{ article['author'] }} </h3>
+    <span>내용 <hr><br>{{ article['body']}} </span>
+
+    <footer>{{article['create_date'] }}</footer>
+</body>
+</html>
+```
+
+
+
+
+
+app.py에 다음과 같은 코드 추가
+
+```python
+@app.route('/<id>/article', methods=['GET', 'POST'])
+def detail(id):
+    if request.method == 'GET':
+        articles = Articles()
+        print(articles[int(id)-1])
+        return render_template('detail.html' , article=articles[int(id)-1] )
+```
+
+
+
