@@ -286,3 +286,123 @@ def detail(id):
 
 
 
+mysql(관계형 데이터베이스) 에 데이터를 CRUD 기능을 이용하여 데이터를 넣고, 편집하고 , 지우고등에 활용을 한다.
+
+DATABASE 생성
+
+```mysql
+CREATE DATABASE o2;
+```
+
+
+
+TABLE 생성
+
+```mysql
+CREATE TABLE lists ( id INT AUTO_INCREMENT, title VARCHAR(32) NOT NULL, description LONGTEXT , author VARCHAR(32), create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP PRIMARY KEY(id) ) ENGINE=INNODB
+
+```
+
+
+
+
+
+app.py 에 다음과 같은 코드를 추가 한다.
+
+```python
+@app.route('/article/add',methods=['GET', 'POST'] )
+def add_article():
+    if request.method == "GET":
+        return render_template('add_article.html')
+
+    elif request.method == "POST":
+        # print(request.form.get('description'))
+        title = request.form['title']
+        description = request.form['description']    
+        author = request.form['author']
+
+        sql = f"""INSERT INTO lists(title, description,author) 
+        VALUES('{title}', '{description}', '{author}');"""
+        # print(sql)
+        # SQL query 실행
+        cursor.execute(sql)
+        
+        # 데이터 변화 적용
+        db.commit()
+
+        return "SUCCESS"
+```
+
+
+
+
+
+templates/add_article.html 
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD PAGE</title>
+</head>
+<body>
+    <h1> ADD PAGE </h1>
+</body>
+</html>
+```
+
+
+
+POSTMAN 프로그램으로 http://localhost:5000/article/add  POST 방식으로 x-www-url-form 형태로 요청을 보내고 테스트 결과를 확인한다.
+
+
+
+![image-20210727142347651](https://user-images.githubusercontent.com/25717861/127100134-c45e21b2-ad86-45a7-b20b-e77433f43b65.png)
+
+myworkbench  프로그램을 통해 데이터가 잘 INSERT  됬는지 확인한다.
+
+
+
+templates/add_article.html 다음과 같이 코드를 추가 한다. 
+
+기타 static 폴더에 파일을 추가하고 layouts.html , includes/_navar.html 등의 파일을 추가후 
+
+```html
+{% extends "layouts.html" %}
+ {% block body %}
+ <form action="/article/add" method="POST" >
+     <header>제목: </header><input name="title" type="text" placeholder="제목 입력"><br>
+     <header>글쓴이 : </header><input name="author" type="text" placeholder="글쓴이 입력"><br>
+     <header>내용 : </header>
+     <textarea name="description" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+     <input type="submit" value="제출">
+ </form>
+
+{% endblock %}
+```
+
+
+
+
+
+app.py 파일의 @app.route('/article/add')
+
+이부분의 코드 수정
+
+
+
+```python
+from flask import Flask , render_template , request ,redirect
+
+@app.route('/article/add',.....)
+
+
+
+	....
+    
+    return redirect('/')
+```
+

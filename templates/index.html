@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index 페이지</title>
-</head>
-<body>
-    <table style="width:100%">
-        
-        <tr>
+{% extends "layouts.html" %}
+
+ {% block body %}
+    <table class="table table-bordered">
+        <thead>
+          <tr>
             <th>id</th>
             <th>title</th>
             <th>author</th>
             <th>date</th>
           </tr>
+        </thead>
+        <tbody>
           {% for article in articles %}
 
           <tr>
@@ -24,7 +20,9 @@
             <td>{{article['create_date']}}</td>
           </tr>
         {% endfor %}
+        </tbody>
+          
 
       </table>
-</body>
-</html>
+
+    {% endblock %}

@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADD PAGE</title>
-</head>
-<body>
-    <h1> ADD PAGE </h1>
-</body>
-</html>
+{% extends "layouts.html" %}
+ {% block body %}
+ <form action="/article/add" method="POST" >
+     <header>제목: </header><input name="title" type="text" placeholder="제목 입력"><br>
+     <header>글쓴이 : </header><input name="author" type="text" placeholder="글쓴이 입력"><br>
+     <header>내용 : </header>
+     <textarea name="description" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+     <input type="submit" value="제출">
+ </form>
+
+{% endblock %}
