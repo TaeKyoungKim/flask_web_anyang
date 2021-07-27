@@ -406,3 +406,85 @@ from flask import Flask , render_template , request ,redirect
     return redirect('/')
 ```
 
+
+
+삭제 기능을 추가
+
+index. html 파일을 다음과 같이 추가한다.
+
+
+
+```html
+{% extends "layouts.html" %}
+
+ {% block body %}
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>author</th>
+            <th>date</th>
+            <th>기타</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for article in articles %}
+
+          <tr>
+            <td>{{article['id']}}</td>
+            <td><a href="/{{ article['id'] }}/article">{{article['title']}}</a></td>
+            <td>{{article['author']}}</td>
+            <td>{{article['create_date']}}</td>
+            <td>
+              <a href="/{{ article['id'] }}/delete">
+                <button class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?')">
+                  삭제
+                </button> 
+              </a>
+             
+              <button class="btn btn-success">편집</button></td>
+            
+          </tr>
+        {% endfor %}
+        </tbody>
+          
+
+      </table>
+      <a href="/article/add"><button class="btn btn-warning">글쓰기</button></a>
+    {% endblock %}
+
+
+```
+
+
+
+
+
+app.py에 http://localhost:5000/id/delete 로 GET방식으로 요청이 왔을떄 그 id에 해당하는 글이 database 에서 삭제 하는 기능 추가
+
+
+
+```python
+@app.route('/<id>/delete')
+def del_article(id):
+    sql = f"DELETE FROM `o2`.`lists` WHERE (`id` = '{int(id)}');"
+    # print(sql)
+    # SQL query 실행
+    cursor.execute(sql)
+    
+    # 데이터 변화 적용
+    db.commit()
+    return redirect('/')
+```
+
+
+
+
+
+
+
+
+
+
+
