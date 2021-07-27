@@ -19,19 +19,30 @@ cursor= db.cursor()
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
-    articles = Articles()
+    # articles = Articles()
     # print(articles)
-
-    for  i in articles:
-        print(i['title'])
+    sql = f"SELECT * FROM lists"
+    # print(sql)
+    # SQL query 실행
+    cursor.execute(sql)
+    articles  = cursor.fetchall()
+    # print(articles[0][1])
+    # for  i in articles:
+    #     print(i[1])
     return render_template('index.html' , articles =articles )
 
 @app.route('/<id>/article', methods=['GET', 'POST'])
 def detail(id):
     if request.method == 'GET':
-        articles = Articles()
-        print(articles[int(id)-1])
-        return render_template('detail.html' , article=articles[int(id)-1] )
+        # articles = Articles()
+        # print(articles[int(id)-1])
+        sql = f"SELECT * FROM lists WHERE id={int(id)}"
+        # print(sql)
+        # SQL query 실행
+        cursor.execute(sql)
+        article  = cursor.fetchone()
+        print(article)
+        return render_template('detail.html' , article=article)
 
 @app.route('/article/add',methods=['GET', 'POST'] )
 def add_article():

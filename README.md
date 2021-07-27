@@ -482,6 +482,29 @@ def del_article(id):
 
 
 
+mysql의 o2 schema의 lists 테이블에 있는 데이터를 조회 해서 articles저장하고 index.html 전달하는 기능 추가하기 위해
+
+app.py를 다음과 같이 수정
+
+```python
+...
+
+@app.route('/', methods=['GET', 'POST'])
+def hello_world():
+    # articles = Articles()
+    # print(articles)
+    sql = f"SELECT * FROM lists"
+    # print(sql)
+    # SQL query 실행
+    cursor.execute(sql)
+    articles  = cursor.fetchall()
+    # print(articles[0][1])
+    # for  i in articles:
+    #     print(i[1])
+    return render_template('index.html' , articles =articles )
+...
+```
+
 
 
 

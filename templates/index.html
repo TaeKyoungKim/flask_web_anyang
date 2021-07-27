@@ -15,12 +15,12 @@
           {% for article in articles %}
 
           <tr>
-            <td>{{article['id']}}</td>
-            <td><a href="/{{ article['id'] }}/article">{{article['title']}}</a></td>
-            <td>{{article['author']}}</td>
-            <td>{{article['create_date']}}</td>
+            <td>{{article[0]}}</td>
+            <td><a href="/{{ article[0] }}/article">{{article[1]}}</a></td>
+            <td>{{article[3]}}</td>
+            <td>{{article[4]}}</td>
             <td>
-              <a href="/{{ article['id'] }}/delete">
+              <a href="/{{ article[0] }}/delete">
                 <button class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?')">
                   삭제
                 </button> 
