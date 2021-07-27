@@ -507,7 +507,89 @@ def hello_world():
 
 
 
+articles 데이터가 Tupple 이므로 index.html의 for문을 다음과 같이 수정한다.
+
+```html
+{% extends "layouts.html" %}
+
+ {% block body %}
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>author</th>
+            <th>date</th>
+            <th>기타</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for article in articles %}
+
+          <tr>
+            <td>{{article[0]}}</td>
+            <td><a href="/{{ article[0] }}/article">{{article[1]}}</a></td>
+            <td>{{article[3]}}</td>
+            <td>{{article[4]}}</td>
+            <td>
+              <a href="/{{ article[0] }}/delete">
+                <button class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?')">
+                  삭제
+                </button> 
+              </a>
+             
+              <button class="btn btn-success">편집</button></td>
+            
+          </tr>
+        {% endfor %}
+        </tbody>
+          
+
+      </table>
+      <a href="/article/add"><button class="btn btn-warning">글쓰기</button></a>
+    {% endblock %}
+
+```
 
 
 
+title 클릭시 데이터를 조회한 상세 페이지가 랜더링 되도록 기능 구현
+
+app.py의 @app.route('/<id>/article', methods=['GET', 'POST']) 부분을 다음과 같이 수정한다.
+
+
+
+
+
+detail.html을 수정한다.
+
+```html
+{% extends "layouts.html" %}
+
+ {% block body %}
+    <h3>제목 : {{ article[1] }}</h3>
+    <header>작가 : {{ article[3] }} </header>
+    <span>내용 <hr><br>{{ article[2]}} </span>
+
+    <footer>{{article[4] }}</footer>
+{% endblock %}
+```
+
+
+
+편집 기능 추가
+
+index.html 의 편집버튼 코드 수정
+
+```html
+  <a href="/{{ article[0] }}/edit">
+                <button class="btn btn-success" ">
+                  편집
+                </button> 
+              </a>
+```
+
+
+
+app.py 다음과 같은 코드를 추가한다.
 
