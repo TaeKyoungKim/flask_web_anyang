@@ -77,5 +77,34 @@ def del_article(id):
     db.commit()
     return redirect('/')
 
+@app.route('/<id>/edit', methods=['GET', 'POST'])
+def edit_article(id):
+    if request.method == 'GET':
+        sql = f"SELECT * FROM lists WHERE id={int(id)}"
+        # print(sql)
+        # SQL query 실행
+        cursor.execute(sql)
+        article  = cursor.fetchone()
+
+        return render_template('edit_article.html', article=article)
+
+    elif request.method =="POST":
+        # print(request.form.get('description'))
+        title = request.form['title']
+        description = request.form['description']    
+        author = request.form['author']
+
+        # sql= f"""UPDATE lists SET title='{title}', description='{description}' , author='{author}'
+        #  WHERE id = {int(id)} """
+        sql= """UPDATE lists SET title='%s', description='%s' , author='%s'
+         WHERE id = %d """ % (title,description,author ,int(id))
+        # print(sql)
+        # SQL query 실행
+        cursor.execute(sql)
+        
+        # 데이터 변화 적용
+        db.commit()
+
+        return redirect('/')
 if __name__ == '__main__': 
     app.run() 

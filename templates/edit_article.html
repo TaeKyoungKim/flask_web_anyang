@@ -1,0 +1,11 @@
+{% extends "layouts.html" %}
+ {% block body %}
+ <form action="/{{article[0]}}/edit" method="POST" >
+     <header>제목: </header><input name="title" type="text" value="{{article[1]}}" ><br>
+     <header>글쓴이 : </header><input name="author" type="text" value="{{article[3]}}"><br>
+     <header>내용 : </header>
+     <textarea name="description" cols="30" rows="10" >{{article[2]}} </textarea>
+     <input type="submit" value="제출">
+ </form>
+
+{% endblock %}
