@@ -117,7 +117,7 @@ templates/index.html 파일 생성후 다음과 같이 코드를 추가한다.
 
 app.py에 
 
-from flask import Flask , render_template 추가훈
+from flask import Flask , render_template 추가 후
 
 @app.routes('/' ....) 를 다음과 같이 수정한다.
 
@@ -131,16 +131,32 @@ def hello_world():
 
 
 
+목업 데이터를 data.py 에 다음과 같은 코드를 추가해서 데이터를 만든다.
+
+```python
+def Articles():
+    articles = [{  'id': 1,  'title':'Article one',  'body':'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',  'author':'vasanth',  'create_date':'04-09-2018',  }, 
+ {  'id': 2,  'title':'Article two',  'body':'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit  in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',  'author':'vasanth nagarajan',  'create_date':'05-09-2018',  },  
+{  'id': 3,  'title':'Article three',  'body':'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',  'author':'nagarajan vasanth',  'create_date':'04-09-2018',  } ] 
+    return articles
+
+# data = Articles()
+# print(data)
+```
 
 
-http://localhost:5000 로 request가 들어왔을때 서버가 일정한 데이터 (예)"메인페이지")를 실어 보내는 기능
+
+http://localhost:5000 로 request가 들어왔을때 서버가 일정한 데이터 (예) articles)를 실어 보내는 기능
 
 @app.routes('/' ....) 를 다음과 같이 수정한다.
 
 ```python
+from data import Articles
+
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
-    return render_template('index.html' , data ="메인페이지" )
+    articles  = Articles()
+    return render_template('index.html' , articles =articles )
 ```
 
 
@@ -232,7 +248,7 @@ title 클릭시 http://localhost:5000/id/article 주소로 GET방식으로 요�
 
 
 
-index.html을 다음과 같이 수정한다.
+detail.html을 다음과 같이 수정한다.
 
 ```html
 <!DOCTYPE html>
