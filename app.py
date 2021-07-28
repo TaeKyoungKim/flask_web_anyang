@@ -1,4 +1,5 @@
 
+from functools import wraps
 from flask import Flask , render_template , request ,redirect, session
 from data import Articles
 import pymysql
@@ -17,11 +18,23 @@ db= pymysql.connect(host='localhost',
 # database를 사용하기 위한 cursor를 세팅합니다.
 cursor= db.cursor()
 
+def is_loged_in(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        if 'is_loged' in session:
+            return func(*args, **kwargs)
+        else:
+            return redirect('/login')
+    return wrap
+        
+
 @app.route('/')
+@is_loged_in
 def main():
     return render_template('index.html')
 
 @app.route('/articles', methods=['GET', 'POST'])
+@is_loged_in
 def articles():
     # articles = Articles()
     # print(articles)
@@ -36,6 +49,7 @@ def articles():
     return render_template('articles.html' , articles =articles )
 
 @app.route('/<id>/article', methods=['GET', 'POST'])
+@is_loged_in
 def detail(id):
     if request.method == 'GET':
         # articles = Articles()
@@ -49,6 +63,7 @@ def detail(id):
         return render_template('detail.html' , article=article)
 
 @app.route('/article/add',methods=['GET', 'POST'] )
+@is_loged_in
 def add_article():
     if request.method == "GET":
         return render_template('add_article.html')
@@ -70,6 +85,7 @@ def add_article():
         return redirect('/')
 
 @app.route('/<id>/delete')
+@is_loged_in
 def del_article(id):
     sql = f"DELETE FROM `o2`.`lists` WHERE (`id` = {int(id)});"
     # print(sql)
@@ -81,6 +97,7 @@ def del_article(id):
     return redirect('/')
 
 @app.route('/<id>/edit', methods=['GET', 'POST'])
+@is_loged_in
 def edit_article(id):
     if request.method == 'GET':
         sql = f"SELECT * FROM lists WHERE id={int(id)}"
@@ -179,7 +196,10 @@ def login():
             else:
                 return render_template('login.html')
                 
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 if __name__ == '__main__': 
     app.config['SECRET_KEY'] = "secret"
