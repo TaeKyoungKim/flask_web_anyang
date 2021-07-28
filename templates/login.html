@@ -1,0 +1,9 @@
+{% extends "layouts.html" %}
+ {% block body %}
+ <form action="/login" method="POST" >
+     <header>아이디: </header><input class="form-control form-control-sm"  name="id" type="text" placeholder="아이디 입력"><br>
+     <header>비밀번호 : </header><input class="form-control form-control-sm" name="password" type="password" placeholder="비밀번호 입력"><br>
+     <input type="submit" class="btn btn-success" value="로그인">
+ </form>
+    <a href="/register"><button  class="btn btn-warning" >회원가입</button></a>
+{% endblock %}

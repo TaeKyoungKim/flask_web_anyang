@@ -1,0 +1,32 @@
+{% extends "layouts.html" %}
+ {% block body %}
+ <h1>Register</h1>
+ 
+ <form action="/register" method="POST" >
+
+     {{ form.hidden_tag()}}<br>
+    
+     {{ form.id.label }}
+     {{form.id(class="form-control form-control-sm" ,placeholder="아이디")}}<br>
+
+     {{ form.name.label }}
+     {{form.name(class="form-control form-control-sm" ,placeholder="이름")}}<br>
+
+     {{ form.email.label }}
+     {{form.email(class="form-control form-control-sm" ,placeholder="이메일")}}<br>
+
+     {{ form.phone.label }}
+     {{form.phone(class="form-control form-control-sm" ,placeholder="전화번호")}}<br>
+
+
+     {{ form.password.label }}
+     {{form.password(class="form-control form-control-sm" ,placeholder="password")}}<br>
+
+     {{ form.repassword.label }}
+     {{form.repassword(class="form-control form-control-sm" ,placeholder="confirm password")}}<br>
+
+     {{form.submit( class="btn btn-success")}}
+     
+ </form>
+
+{% endblock %}
