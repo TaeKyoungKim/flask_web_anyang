@@ -1,5 +1,5 @@
 
-from flask import Flask , render_template , request ,redirect
+from flask import Flask , render_template , request ,redirect, session
 from data import Articles
 import pymysql
 from passlib.hash import pbkdf2_sha256
@@ -151,6 +151,34 @@ def register():
                 return "SUCCESS"
         else:
             return render_template('register.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "GET":
+        return render_template('login.html')
+    else:
+        user_id = request.form['id']
+        password = request.form['password']
+
+        sql =f'SELECT * FROM users WHERE user_id="{user_id}"'
+        
+        cursor.execute(sql)
+
+        user = cursor.fetchone()
+        print(user)
+        if user == None:
+            return render_template('login.html')
+        else:
+            user_db_pw = user[5]
+            result = pbkdf2_sha256.verify(password, user_db_pw)
+            if result:
+                session['is_loged'] = True
+                session['username'] = user[2]
+                return render_template('index.html')
+            
+            else:
+                return render_template('login.html')
+                
 
 
 if __name__ == '__main__': 

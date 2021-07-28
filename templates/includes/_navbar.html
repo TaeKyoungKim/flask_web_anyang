@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    {% if session['is_logged'] %}
+    {% if session['is_loged'] %}
     <a class="navbar-brand" href="/">Wecome ! {{ session['username'] }}</a>
     {% else %}
     <a class="navbar-brand" href="/">Flask_Web</a>
@@ -21,7 +21,7 @@
       </div>
       <div>
         <ul class="navbar-nav">
-          {% if 'is_logged' in session %}
+          {% if session['is_loged'] %}
           <li class="nav-item">
             <a class="nav-link" href="/logout">LogOut</a>
           </li>
